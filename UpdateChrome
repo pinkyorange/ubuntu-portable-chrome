@@ -1,0 +1,32 @@
+HERE="$(dirname "$(readlink -f "$0")")"
+
+if [ -d "/tmp/chromenew" ]
+then
+	rm -rf /tmp/chromenew
+fi
+
+echo "Downloading files..."
+mkdir /tmp/chromenew
+mkdir /tmp/chromenew/files
+
+wget -P /tmp/chromenew https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+if [ ! -f "/tmp/chromenew/google-chrome-stable_current_amd64.deb" ]
+then
+	echo "Download failed! Try again later..."
+	rm -rf /tmp/chromenew
+	exit 0
+fi
+
+cd /tmp/chromenew
+ar x google-chrome-stable_current_amd64.deb
+tar xvf ./data.tar.xz
+
+cp -R /tmp/chromenew/opt/google/chrome $HERE/chrome
+rm -rf $HERE/chrome/cron
+rm $HERE/chrome/google-chrome
+rm $HERE/chrome/product_logo_16.png $HERE/chrome/product_logo_24.png $HERE/chrome/product_logo_32.png $HERE/chrome/product_logo_32.xpm $HERE/chrome/product_logo_48.png $HERE/chrome/product_logo_64.png $HERE/chrome/product_logo_128.png $HERE/chrome/product_logo_256.png
+
+rm -rf /tmp/chromenew
+
+exit

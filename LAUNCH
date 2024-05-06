@@ -1,0 +1,14 @@
+HERE="$(dirname "$(readlink -f "$0")")"
+
+RELEASE_URL=$(wget -q -O - https://chrome-versions.com/ | grep -o -E "google-chrome-stable-[^<>]*?.deb" | sort -V | tail -1)
+LAST_RELEASE=$(echo ${RELEASE_URL} | sed 's/google-chrome-stable-//; s/-1.deb//')
+echo last version $LAST_RELEASE
+
+mkdir "$HERE/PROFILE" 2> /dev/null
+mkdir "$HERE/PROFILE/spot" 2> /dev/null
+mkdir "$HERE/PROFILE/spot/google-chrome" 2> /dev/null
+
+chown -R $USER:$USER "$HERE/PROFILE/spot"
+chown -R $USER:$USER "$HERE/chrome"
+
+"$HERE/chrome/chrome" --user-data-dir=$HERE/PROFILE/spot/google-chrome --disable-infobars --disable-features=OptimizationGuideModelDownloading,OptimizationHintsFetching,OptimizationTargetPrediction,OptimizationHints "$@"
