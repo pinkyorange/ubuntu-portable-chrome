@@ -1,6 +1,7 @@
 # ubuntu-portable-chrome
 
 - Download both scripts to new folder
-- Run both scripts in terminal ./UpdateChrome and ./LAUNCH
+- Make scripts executable
+- Run both scripts ./UpdateChrome and ./LAUNCH
 - ???
 - Profit!
